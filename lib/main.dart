@@ -1,85 +1,85 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const ZooApp());
+  runApp(const GadgetApp());
 }
 
 // ================= ABSTRACT CLASS =================
 
-abstract class Hewan {
+abstract class Perangkat {
   String nama;
-  int umur;
-  String suaraHewan;
+  int garansi;
+  String fitur;
   String urlGambar;
 
-  Hewan(this.nama, this.umur, this.suaraHewan, this.urlGambar);
+  Perangkat(this.nama, this.garansi, this.fitur, this.urlGambar);
 
-  String suara() {
-    return suaraHewan;
+  String fiturUnggulan() {
+    return fitur;
   }
 
-  String aksi();
+  String kegunaan();
 
   String informasi() {
-    return "Nama : $nama\nUmur : $umur tahun";
+    return "Nama : $nama\nGaransi : $garansi tahun";
   }
 
 }
 
 // ================= CLASS TURUNAN =================
 
-class Singa extends Hewan {
-  String habitat;
+class Laptop extends Perangkat {
+  String prosesor;
 
-  Singa(String nama, int umur, String suaraHewan, String urlGambar, this.habitat)
-      : super(nama, umur, suaraHewan, urlGambar);
+  Laptop(String nama, int garansi, String fitur, String urlGambar, this.prosesor)
+      : super(nama, garansi, fitur, urlGambar);
 
   @override
-  String aksi() {
-    return "$nama sedang berburu di $habitat";
+  String kegunaan() {
+    return "$nama siap dipakai kerja berat dengan prosesor $prosesor";
   }
 }
 
-class Burung extends Hewan {
-  double panjangSayap;
+class Ponsel extends Perangkat {
+  double ukuranLayar;
 
-  Burung(String nama, int umur, String suaraHewan, String urlGambar, this.panjangSayap)
-      : super(nama, umur, suaraHewan, urlGambar);
+  Ponsel(String nama, int garansi, String fitur, String urlGambar, this.ukuranLayar)
+      : super(nama, garansi, fitur, urlGambar);
 
   @override
-  String aksi() {
-    return "$nama terbang dengan sayap selebar $panjangSayap cm";
+  String kegunaan() {
+    return "$nama nyaman dipakai sehari-hari dengan layar $ukuranLayar inci";
   }
 }
 
-class Ikan extends Hewan {
-  String jenisAir;
+class Tablet extends Perangkat {
+  String konektivitas;
 
-  Ikan(String nama, int umur, String suaraHewan, String urlGambar, this.jenisAir)
-      : super(nama, umur, suaraHewan, urlGambar);
+  Tablet(String nama, int garansi, String fitur, String urlGambar, this.konektivitas)
+      : super(nama, garansi, fitur, urlGambar);
 
   @override
-  String aksi() {
-    return "$nama berenang di $jenisAir";
+  String kegunaan() {
+    return "$nama terhubung lewat $konektivitas";
   }
 }
 
 // ================= FLUTTER UI =================
 
-class ZooApp extends StatelessWidget {
-  const ZooApp({super.key});
+class GadgetApp extends StatelessWidget {
+  const GadgetApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Modern Zoo App',
+      title: 'TechVault',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.teal,
-        scaffoldBackgroundColor: Colors.grey[100],
+        primarySwatch: Colors.indigo,
+        scaffoldBackgroundColor: Colors.blueGrey[50],
         appBarTheme: const AppBarTheme(
           elevation: 0,
-          backgroundColor: Colors.teal,
+          backgroundColor: Colors.indigo,
           centerTitle: true,
           titleTextStyle: TextStyle(
             fontSize: 20,
@@ -88,27 +88,27 @@ class ZooApp extends StatelessWidget {
           ),
         ),
       ),
-      home: const DaftarHewanScreen(),
+      home: const DaftarPerangkatScreen(),
     );
   }
 }
 
 // ================= HALAMAN UTAMA =================
 
-class DaftarHewanScreen extends StatefulWidget {
-  const DaftarHewanScreen({super.key});
+class DaftarPerangkatScreen extends StatefulWidget {
+  const DaftarPerangkatScreen({super.key});
 
   @override
-  State<DaftarHewanScreen> createState() => _DaftarHewanScreenState();
+  State<DaftarPerangkatScreen> createState() => _DaftarPerangkatScreenState();
 }
 
-class _DaftarHewanScreenState extends State<DaftarHewanScreen> {
+class _DaftarPerangkatScreenState extends State<DaftarPerangkatScreen> {
   // Disimpan di memori, selalu kosong saat program start
-  final List<Hewan> _daftarHewan = [];
+  final List<Perangkat> _daftarPerangkat = [];
 
-  void _tambahHewan(Hewan hewanBaru) {
+  void _tambahPerangkat(Perangkat perangkatBaru) {
     setState(() {
-      _daftarHewan.add(hewanBaru);
+      _daftarPerangkat.add(perangkatBaru);
     });
   }
 
@@ -116,27 +116,27 @@ class _DaftarHewanScreenState extends State<DaftarHewanScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Zoo Explorer"),
+        title: const Text("TechVault"),
       ),
-      body: _daftarHewan.isEmpty
+      body: _daftarPerangkat.isEmpty
           ? Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.pets, size: 80, color: Colors.grey[400]),
+                  Icon(Icons.devices, size: 80, color: Colors.blueGrey[300]),
                   const SizedBox(height: 16),
                   Text(
-                    "Belum ada data hewan.",
-                    style: TextStyle(fontSize: 18, color: Colors.grey[600]),
+                    "Belum ada data perangkat.",
+                    style: TextStyle(fontSize: 18, color: Colors.blueGrey[600]),
                   ),
                 ],
               ),
             )
           : ListView.builder(
               padding: const EdgeInsets.all(16),
-              itemCount: _daftarHewan.length,
+              itemCount: _daftarPerangkat.length,
               itemBuilder: (context, index) {
-                Hewan hewan = _daftarHewan[index];
+                Perangkat perangkat = _daftarPerangkat[index];
                 return Card(
                   elevation: 2,
                   margin: const EdgeInsets.only(bottom: 16),
@@ -152,24 +152,24 @@ class _DaftarHewanScreenState extends State<DaftarHewanScreen> {
                         borderRadius: const BorderRadius.vertical(
                           top: Radius.circular(16),
                         ),
-                        child: hewan.urlGambar.isNotEmpty
+                        child: perangkat.urlGambar.isNotEmpty
                             ? Image.network(
-                                hewan.urlGambar,
+                                perangkat.urlGambar,
                                 height: 180,
                                 fit: BoxFit.cover,
                                 errorBuilder: (context, error, stackTrace) =>
                                     Container(
                                   height: 180,
-                                  color: Colors.grey[300],
+                                  color: Colors.blueGrey[100],
                                   child: const Icon(Icons.broken_image,
-                                      size: 50, color: Colors.grey),
+                                      size: 50, color: Colors.blueGrey),
                                 ),
                               )
                             : Container(
                                 height: 180,
-                                color: Colors.teal[100],
-                                child: const Icon(Icons.pets,
-                                    size: 50, color: Colors.teal),
+                                color: Colors.indigo[100],
+                                child: const Icon(Icons.devices,
+                                    size: 50, color: Colors.indigo),
                               ),
                       ),
                       // Bagian Informasi
@@ -179,19 +179,19 @@ class _DaftarHewanScreenState extends State<DaftarHewanScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              hewan.nama,
+                              perangkat.nama,
                               style: const TextStyle(
                                 fontSize: 22,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
                             const SizedBox(height: 8),
-                            Text(hewan.informasi(),
-                                style: TextStyle(color: Colors.grey[700])),
+                            Text(perangkat.informasi(),
+                                style: TextStyle(color: Colors.blueGrey[700])),
                             const Divider(height: 24),
-                            _buildInfoRow(Icons.volume_up, "Suara", hewan.suara()),
+                            _buildInfoRow(Icons.bolt, "Fitur", perangkat.fiturUnggulan()),
                             const SizedBox(height: 8),
-                            _buildInfoRow(Icons.directions_run, "Aksi", hewan.aksi()),
+                            _buildInfoRow(Icons.tips_and_updates, "Kegunaan", perangkat.kegunaan()),
                           ],
                         ),
                       ),
@@ -201,14 +201,16 @@ class _DaftarHewanScreenState extends State<DaftarHewanScreen> {
               },
             ),
       floatingActionButton: FloatingActionButton.extended(
+        backgroundColor: Colors.indigo,
+        foregroundColor: Colors.white,
         onPressed: () async {
-          final Hewan? hewanBaru = await Navigator.push(
+          final Perangkat? perangkatBaru = await Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const FormTambahHewan()),
+            MaterialPageRoute(builder: (context) => const FormTambahPerangkat()),
           );
 
-          if (hewanBaru != null) {
-            _tambahHewan(hewanBaru);
+          if (perangkatBaru != null) {
+            _tambahPerangkat(perangkatBaru);
           }
         },
         icon: const Icon(Icons.add),
@@ -221,7 +223,7 @@ class _DaftarHewanScreenState extends State<DaftarHewanScreen> {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Icon(icon, size: 20, color: Colors.teal),
+        Icon(icon, size: 20, color: Colors.indigo),
         const SizedBox(width: 8),
         Expanded(
           child: RichText(
@@ -243,29 +245,29 @@ class _DaftarHewanScreenState extends State<DaftarHewanScreen> {
 
 // ================= HALAMAN FORM =================
 
-class FormTambahHewan extends StatefulWidget {
-  const FormTambahHewan({super.key});
+class FormTambahPerangkat extends StatefulWidget {
+  const FormTambahPerangkat({super.key});
 
   @override
-  State<FormTambahHewan> createState() => _FormTambahHewanState();
+  State<FormTambahPerangkat> createState() => _FormTambahPerangkatState();
 }
 
-class _FormTambahHewanState extends State<FormTambahHewan> {
+class _FormTambahPerangkatState extends State<FormTambahPerangkat> {
   final _formKey = GlobalKey<FormState>();
 
   final _namaController = TextEditingController();
-  final _umurController = TextEditingController();
-  final _suaraController = TextEditingController();
+  final _garansiController = TextEditingController();
+  final _fiturController = TextEditingController();
   final _gambarController = TextEditingController();
   final _atributKhususController = TextEditingController();
 
-  String _jenisHewan = 'Singa';
+  String _jenisPerangkat = 'Laptop';
 
   @override
   void dispose() {
     _namaController.dispose();
-    _umurController.dispose();
-    _suaraController.dispose();
+    _garansiController.dispose();
+    _fiturController.dispose();
     _gambarController.dispose();
     _atributKhususController.dispose();
     super.dispose();
@@ -273,23 +275,23 @@ class _FormTambahHewanState extends State<FormTambahHewan> {
 
   void _simpanData() {
     if (_formKey.currentState!.validate()) {
-      Hewan hewanBaru;
+      Perangkat perangkatBaru;
       String nama = _namaController.text;
-      int umur = int.parse(_umurController.text);
-      String suara = _suaraController.text;
+      int garansi = int.parse(_garansiController.text);
+      String fitur = _fiturController.text;
       String gambar = _gambarController.text;
       String atributKhusus = _atributKhususController.text;
 
-      if (_jenisHewan == 'Singa') {
-        hewanBaru = Singa(nama, umur, suara, gambar, atributKhusus);
-      } else if (_jenisHewan == 'Burung') {
-        double sayap = double.tryParse(atributKhusus) ?? 0.0;
-        hewanBaru = Burung(nama, umur, suara, gambar, sayap);
+      if (_jenisPerangkat == 'Laptop') {
+        perangkatBaru = Laptop(nama, garansi, fitur, gambar, atributKhusus);
+      } else if (_jenisPerangkat == 'Ponsel') {
+        double layar = double.tryParse(atributKhusus) ?? 0.0;
+        perangkatBaru = Ponsel(nama, garansi, fitur, gambar, layar);
       } else {
-        hewanBaru = Ikan(nama, umur, suara, gambar, atributKhusus);
+        perangkatBaru = Tablet(nama, garansi, fitur, gambar, atributKhusus);
       }
 
-      Navigator.pop(context, hewanBaru);
+      Navigator.pop(context, perangkatBaru);
     }
   }
 
@@ -297,7 +299,7 @@ class _FormTambahHewanState extends State<FormTambahHewan> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Tambah Hewan"),
+        title: const Text("Tambah Perangkat"),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(24),
@@ -307,9 +309,9 @@ class _FormTambahHewanState extends State<FormTambahHewan> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               DropdownButtonFormField<String>(
-                value: _jenisHewan,
-                decoration: _inputStyle("Jenis Hewan", Icons.category),
-                items: ['Singa', 'Burung', 'Ikan']
+                value: _jenisPerangkat,
+                decoration: _inputStyle("Jenis Perangkat", Icons.category),
+                items: ['Laptop', 'Ponsel', 'Tablet']
                     .map((jenis) => DropdownMenuItem(
                           value: jenis,
                           child: Text(jenis),
@@ -317,7 +319,7 @@ class _FormTambahHewanState extends State<FormTambahHewan> {
                     .toList(),
                 onChanged: (value) {
                   setState(() {
-                    _jenisHewan = value!;
+                    _jenisPerangkat = value!;
                     _atributKhususController.clear();
                   });
                 },
@@ -325,27 +327,27 @@ class _FormTambahHewanState extends State<FormTambahHewan> {
               const SizedBox(height: 16),
               TextFormField(
                 controller: _namaController,
-                decoration: _inputStyle("Nama Hewan", Icons.badge),
+                decoration: _inputStyle("Nama Perangkat", Icons.badge),
                 validator: (value) =>
                     value!.isEmpty ? 'Nama tidak boleh kosong' : null,
               ),
               const SizedBox(height: 16),
               TextFormField(
-                controller: _umurController,
+                controller: _garansiController,
                 keyboardType: TextInputType.number,
-                decoration: _inputStyle("Umur (Tahun)", Icons.calendar_today),
+                decoration: _inputStyle("Garansi (Tahun)", Icons.verified_user),
                 validator: (value) {
-                  if (value!.isEmpty) return 'Umur tidak boleh kosong';
+                  if (value!.isEmpty) return 'Garansi tidak boleh kosong';
                   if (int.tryParse(value) == null) return 'Harus berupa angka';
                   return null;
                 },
               ),
               const SizedBox(height: 16),
               TextFormField(
-                controller: _suaraController,
-                decoration: _inputStyle("Suara (Contoh: Roar!)", Icons.volume_up),
+                controller: _fiturController,
+                decoration: _inputStyle("Fitur Unggulan (Contoh: Layar 120Hz)", Icons.bolt),
                 validator: (value) =>
-                    value!.isEmpty ? 'Suara tidak boleh kosong' : null,
+                    value!.isEmpty ? 'Fitur tidak boleh kosong' : null,
               ),
               const SizedBox(height: 16),
               TextFormField(
@@ -357,16 +359,16 @@ class _FormTambahHewanState extends State<FormTambahHewan> {
               const SizedBox(height: 16),
               TextFormField(
                 controller: _atributKhususController,
-                keyboardType: _jenisHewan == 'Burung'
+                keyboardType: _jenisPerangkat == 'Ponsel'
                     ? const TextInputType.numberWithOptions(decimal: true)
                     : TextInputType.text,
                 decoration: _inputStyle(
-                  _jenisHewan == 'Singa'
-                      ? "Habitat (Contoh: Sabana)"
-                      : _jenisHewan == 'Burung'
-                          ? "Panjang Sayap (cm)"
-                          : "Jenis Air (Contoh: Air Tawar)",
-                  Icons.star,
+                  _jenisPerangkat == 'Laptop'
+                      ? "Prosesor (Contoh: Intel Core i7)"
+                      : _jenisPerangkat == 'Ponsel'
+                          ? "Ukuran Layar (inci)"
+                          : "Konektivitas (Contoh: WiFi + Cellular)",
+                  Icons.memory,
                 ),
                 validator: (value) =>
                     value!.isEmpty ? 'Atribut ini wajib diisi' : null,
@@ -379,7 +381,7 @@ class _FormTambahHewanState extends State<FormTambahHewan> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  backgroundColor: Colors.teal,
+                  backgroundColor: Colors.indigo,
                 ),
                 child: const Text(
                   "SIMPAN DATA",
@@ -400,7 +402,7 @@ class _FormTambahHewanState extends State<FormTambahHewan> {
   InputDecoration _inputStyle(String label, IconData icon) {
     return InputDecoration(
       labelText: label,
-      prefixIcon: Icon(icon, color: Colors.teal),
+      prefixIcon: Icon(icon, color: Colors.indigo),
       filled: true,
       fillColor: Colors.white,
       border: OutlineInputBorder(
@@ -409,11 +411,11 @@ class _FormTambahHewanState extends State<FormTambahHewan> {
       ),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide(color: Colors.grey.shade300, width: 1),
+        borderSide: BorderSide(color: Colors.blueGrey.shade200, width: 1),
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
-        borderSide: const BorderSide(color: Colors.teal, width: 2),
+        borderSide: const BorderSide(color: Colors.indigo, width: 2),
       ),
     );
   }
